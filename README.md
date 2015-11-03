@@ -7,4 +7,8 @@ The Behavioral Risk Factor Surveillance System (BRFSS) captures information on A
 
 The BRFSS is a rich source of information on how demographics, behaviors, and other risk factors can correlate with health. It is the source of the CDC's "Healthy Days" measurement, a key performance metric for the healthcare industry. This repository will be built over time to demonstrate various correlations and conclusions that can be drawn from this data set using machine learning and statistical techniques.
 
+###Get BRFSS data
+
 To download BRFSS data, visit the [BRFSS Annual Survey Data](http://www.cdc.gov/brfss/annual_data/annual_data.htm) page, where you can find links to each year the survey has been conducted. The data is available in `.XPT` (SAS Transport Format) or in `.ASCII` files. The codebooks are also available for 1990-2014.
+
+It's easiest to use the files if you convert them into `.csv` format. These files are too big to be hosted on Github, so you'll have to download the data and transform it yourself.
