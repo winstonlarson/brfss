@@ -1788,9 +1788,7 @@ for row in weight:
 
 ###Calculating BMI
 
-We've got height and weight in metric units. Let's compute the BMI, which is
-
-$bmi=\frac{w}{h^2}$
+We've got height and weight in metric units. Let's compute the BMI, which is `bmi = w / h^2`.
 
 BMIs that are less than 10 or greater than 200 are possible, but highly unlikely. At the moment, I'm not terribly interested in these outliers (which are honestly more likely the result of error than true BMIs anyway). We will exclude them.
 
