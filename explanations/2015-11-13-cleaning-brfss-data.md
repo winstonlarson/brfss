@@ -1,6 +1,6 @@
 #BRFSS cleaning example
 
-This post is also available as a Jupyter Notebook: `[clean_2014_notebook.ipynb](https://github.com/winstonlarson/brfss/blob/master/clean_2014_notebook.ipynb)`.
+This post is also available as a Jupyter Notebook: [`clean_2014_notebook.ipynb`](https://github.com/winstonlarson/brfss/blob/master/clean_2014_notebook.ipynb).
 
 The BRFSS is a fairly large and messy dataset. To put it into a useable format, you have to do a bit of cleaning and massaging. This Notebook demonstrates cleaning the data bit by bit for 2014. Scripts for every year are in the `cleaning_code` folder. I had to do a separate script for each year because the codebooks change slightly nearly every year, and it's just enough to make it a real headache.
 
