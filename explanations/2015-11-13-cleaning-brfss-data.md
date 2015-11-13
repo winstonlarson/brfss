@@ -8,14 +8,15 @@ Pandas is a terrific tool for data cleaning and manipulation, and that's what I 
 Let's start by importing our libraries. We'll be using Pandas and Numpy.
 
 ```python
-    import numpy as np
-    import pandas as pd
+import numpy as np
+import pandas as pd
 ```
 
 Next, we'll set our year variable (2014), which made it easy to change when I had to copy scripts for each year.
 
-
-    year = '2014'
+```python
+year = '2014'
+```
 
 ##Reading in the data
 
@@ -23,20 +24,19 @@ Let's use Pandas to read in the `.csv` of the raw data for 2014. This isn't avai
 
 Since we didn't specify UTF-8 encoding in the R script for creating the `.csv`'s, we need to specify the encoding, which somehow ends up being the interesting choice of "cp1252." That little tidbit right there was a couple hours worth of Googling.
 
-
-    df = pd.read_csv('data/brfss' + year + '.csv', encoding='cp1252')
-
-    /Users/wlarson/anaconda/lib/python3.4/site-packages/pandas/io/parsers.py:1130: DtypeWarning: Columns (121) have mixed types. Specify dtype option on import or set low_memory=False.
-      data = self._reader.read(nrows)
-
+```python
+df = pd.read_csv('data/brfss' + year + '.csv', encoding='cp1252')
+```
+```
+/Users/wlarson/anaconda/lib/python3.4/site-packages/pandas/io/parsers.py:1130: DtypeWarning: Columns (121) have mixed types. Specify dtype option on import or set low_memory=False.
+    data = self._reader.read(nrows)
+```
 
 Let's take a quick look at what we have here. As you can see, this is a rather large data set.
 
-
-    df
-
-
-
+```python
+df
+```
 
 <div style="max-height:1000px;max-width:1500px;overflow:auto;">
 <table border="1" class="dataframe">
@@ -1536,17 +1536,17 @@ Let's take a quick look at what we have here. As you can see, this is a rather l
 <p>464664 rows × 280 columns</p>
 </div>
 
+```python
+print("Number of rows:", len(df))
+print("Number of columns (variables in the survey):", len(df.columns))
+print(df.columns)
+```
 
-
-
-    print("Number of rows:", len(df))
-    print("Number of columns (variables in the survey):", len(df.columns))
-    print(df.columns)
-
-    Number of rows: 464664
-    Number of columns (variables in the survey): 280
-    Index(['Unnamed: 0', 'x.state', 'fmonth', 'idate', 'imonth', 'iday', 'iyear', 'dispcode', 'seqno', 'x.psu', 'ctelenum', 'pvtresd1', 'colghous', 'stateres', 'ladult', 'numadult', 'nummen', 'numwomen', 'genhlth', 'physhlth', 'menthlth', 'poorhlth', 'hlthpln1', 'persdoc2', 'medcost', 'checkup1', 'exerany2', 'sleptim1', 'cvdinfr4', 'cvdcrhd4', 'cvdstrk3', 'asthma3', 'asthnow', 'chcscncr', 'chcocncr', 'chccopd1', 'havarth3', 'addepev2', 'chckidny', 'diabete3', 'diabage2', 'lastden3', 'rmvteth3', 'veteran3', 'marital', 'children', 'educa', 'employ1', 'income2', 'weight2', 'height3', 'numhhol2', 'numphon2', 'cpdemo1', 'internet', 'renthom1', 'sex', 'pregnant', 'qlactlm2', 'useequip', 'blind', 'decide', 'diffwalk', 'diffdres', 'diffalon', 'smoke100', 'smokday2', 'stopsmk2', 'lastsmk2', 'usenow3', 'alcday5', 'avedrnk2', 'drnk3ge5', 'maxdrnks', 'flushot6', 'flshtmy2', 'pneuvac3', 'shingle2', 'fall12mn', 'fallinj2', 'seatbelt', 'drnkdri2', 'hadmam', 'howlong', 'profexam', 'lengexam', 'hadpap2', 'lastpap2', 'hadhyst2', 'pcpsaad2', 'pcpsadi1', 'pcpsare1', 'psatest1', 'psatime', 'pcpsars1', 'bldstool', 'lstblds3', 'hadsigm3', 'hadsgco1', 'lastsig3', ...], dtype='object')
-
+```
+Number of rows: 464664
+Number of columns (variables in the survey): 280
+Index(['Unnamed: 0', 'x.state', 'fmonth', 'idate', 'imonth', 'iday', 'iyear', 'dispcode', 'seqno', 'x.psu', 'ctelenum', 'pvtresd1', 'colghous', 'stateres', 'ladult', 'numadult', 'nummen', 'numwomen', 'genhlth', 'physhlth', 'menthlth', 'poorhlth', 'hlthpln1', 'persdoc2', 'medcost', 'checkup1', 'exerany2', 'sleptim1', 'cvdinfr4', 'cvdcrhd4', 'cvdstrk3', 'asthma3', 'asthnow', 'chcscncr', 'chcocncr', 'chccopd1', 'havarth3', 'addepev2', 'chckidny', 'diabete3', 'diabage2', 'lastden3', 'rmvteth3', 'veteran3', 'marital', 'children', 'educa', 'employ1', 'income2', 'weight2', 'height3', 'numhhol2', 'numphon2', 'cpdemo1', 'internet', 'renthom1', 'sex', 'pregnant', 'qlactlm2', 'useequip', 'blind', 'decide', 'diffwalk', 'diffdres', 'diffalon', 'smoke100', 'smokday2', 'stopsmk2', 'lastsmk2', 'usenow3', 'alcday5', 'avedrnk2', 'drnk3ge5', 'maxdrnks', 'flushot6', 'flshtmy2', 'pneuvac3', 'shingle2', 'fall12mn', 'fallinj2', 'seatbelt', 'drnkdri2', 'hadmam', 'howlong', 'profexam', 'lengexam', 'hadpap2', 'lastpap2', 'hadhyst2', 'pcpsaad2', 'pcpsadi1', 'pcpsare1', 'psatest1', 'psatime', 'pcpsars1', 'bldstool', 'lstblds3', 'hadsigm3', 'hadsgco1', 'lastsig3', ...], dtype='object')
+```
 
 ## Collecting our variables of interest
 
@@ -1564,7 +1564,7 @@ We'll use height and weight to calculate BMI. In later years (like 2014), the go
 
 We can use Pandas to easily grab the columns we want. We're going to grab those columns as Pandas Series, clean them up, and then piece everything back together as a master DataFrame.
 
-
+```python
     income = df['income2']
     race = df['x.race']
     state = df['x.state']
