@@ -1565,56 +1565,55 @@ We'll use height and weight to calculate BMI. In later years (like 2014), the go
 We can use Pandas to easily grab the columns we want. We're going to grab those columns as Pandas Series, clean them up, and then piece everything back together as a master DataFrame.
 
 ```python
-    income = df['income2']
-    race = df['x.race']
-    state = df['x.state']
-    age = df['x.ageg5yr']
-    sex = df['sex']
-    height = df['height3']
-    weight = df['weight2']
+income = df['income2']
+race = df['x.race']
+state = df['x.state']
+age = df['x.ageg5yr']
+sex = df['sex']
+height = df['height3']
+weight = df['weight2']
+```
 
 If we look at one of these variables, we can get a peek at the way the survey data is coded.
 
+```python
+income
+```
 
-    income
-
-
-
-
-    0      7
-    1      4
-    2      7
-    3      5
-    4      4
-    5      6
-    6      8
-    7      1
-    8     77
-    9      7
-    10    77
-    11     6
-    12     8
-    13     5
-    14     5
-    ...
-    464649     8
-    464650     3
-    464651     1
-    464652     6
-    464653     5
-    464654     1
-    464655     2
-    464656    99
-    464657     2
-    464658     5
-    464659     6
-    464660     7
-    464661    99
-    464662     2
-    464663     4
-    Name: income2, Length: 464664, dtype: float64
-
-
+```
+0      7
+1      4
+2      7
+3      5
+4      4
+5      6
+6      8
+7      1
+8     77
+9      7
+10    77
+11     6
+12     8
+13     5
+14     5
+...
+464649     8
+464650     3
+464651     1
+464652     6
+464653     5
+464654     1
+464655     2
+464656    99
+464657     2
+464658     5
+464659     6
+464660     7
+464661    99
+464662     2
+464663     4
+Name: income2, Length: 464664, dtype: float64
+```
 
 ##Cleaning up a column: Income
 
@@ -1635,88 +1634,90 @@ We're going to group 77 and 99 together as `np.nan`, and we're going to group 7 
 
 Pandas makes it easy to use a dictionary for replacement, so we'll put these codes into a dictionary.
 
-
-    income_replace = {1:'<10k', 2:'10k-15k', 3:'15k-20k', 4:'20k-25k', 5:'25k-35k', 6:'35k-50k', 7:'>50k', 8:'>50k', 77:np.nan, 99:np.nan}
+```python
+income_replace = {1:'<10k', 2:'10k-15k', 3:'15k-20k', 4:'20k-25k', 5:'25k-35k', 6:'35k-50k', 7:'>50k', 8:'>50k', 77:np.nan, 99:np.nan}
+```
 
 ##Cleaning the other columns
 
 Next, we'll clean the race column. If you are working with historical data, this is the trickiest column. The name of the variable, the meanings of the codes, and the groups represented change frequently over the years, and sometimes in subtle ways. Being able to use historical data is why my dictionary ends up grouping some things together that the 2014 dataset breaks out. See the codebook for more details.
 
-
-    race_replace = {1:'white', 2:'black', 3:'native american', 4:'asian/pacific islander', 5:'asian/pacific islander', 6:'other/multiracial', 7:'other/multiracial', 8:'hispanic', 9:'refused/unknown'}
+```python
+race_replace = {1:'white', 2:'black', 3:'native american', 4:'asian/pacific islander', 5:'asian/pacific islander', 6:'other/multiracial', 7:'other/multiracial', 8:'hispanic', 9:'refused/unknown'}
+```
 
 We'll skip the state column for now. It's represented as a FIPS statecode, and you can find more info on Wikipedia: [FIPS codes](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code).
 
 Let's get the age and sex columns mapped.
 
-
-    age_replace = {1:'18-24', 2:'25-29', 3:'30-34', 4:'35-39', 5:'40-44', 6:'45-49', 7:'50-54', 8:'55-59', 9:'60-64', 10:'65-69', 11:'70-74', 12:'75-79', 13:'80+', 14:np.nan}
-    sex_replace = {1:'male', 2:'female'}
+```python
+age_replace = {1:'18-24', 2:'25-29', 3:'30-34', 4:'35-39', 5:'40-44', 6:'45-49', 7:'50-54', 8:'55-59', 9:'60-64', 10:'65-69', 11:'70-74', 12:'75-79', 13:'80+', 14:np.nan}
+sex_replace = {1:'male', 2:'female'}
+```
 
 The height and weight columns are a little trickier to deal with, so we'll handle those in a minute.
 
 ##Using Pandas to do the replacement
 Since we've got our dictionaries of codes mapped to values, we can let Pandas do the heavy lifting of cleaning up our columns.
 
-
-    income = income.replace(income_replace)
-    race = race.replace(race_replace)
-    age = age.replace(age_replace)
-    sex = sex.replace(sex_replace)
+```python
+income = income.replace(income_replace)
+race = race.replace(race_replace)
+age = age.replace(age_replace)
+sex = sex.replace(sex_replace)
+```
 
 Let's check out one of our cleaned up columns. Now it is beautiful and easy-to-use:
 
+```python
+income
+```
 
-    income
-
-
-
-
-    0        >50k
-    1     20k-25k
-    2        >50k
-    3     25k-35k
-    4     20k-25k
-    5     35k-50k
-    6        >50k
-    7        <10k
-    8         NaN
-    9        >50k
-    10        NaN
-    11    35k-50k
-    12       >50k
-    13    25k-35k
-    14    25k-35k
-    ...
-    464649       >50k
-    464650    15k-20k
-    464651       <10k
-    464652    35k-50k
-    464653    25k-35k
-    464654       <10k
-    464655    10k-15k
-    464656        NaN
-    464657    10k-15k
-    464658    25k-35k
-    464659    35k-50k
-    464660       >50k
-    464661        NaN
-    464662    10k-15k
-    464663    20k-25k
-    Name: income2, Length: 464664, dtype: object
-
-
+```
+0        >50k
+1     20k-25k
+2        >50k
+3     25k-35k
+4     20k-25k
+5     35k-50k
+6        >50k
+7        <10k
+8         NaN
+9        >50k
+10        NaN
+11    35k-50k
+12       >50k
+13    25k-35k
+14    25k-35k
+...
+464649       >50k
+464650    15k-20k
+464651       <10k
+464652    35k-50k
+464653    25k-35k
+464654       <10k
+464655    10k-15k
+464656        NaN
+464657    10k-15k
+464658    25k-35k
+464659    35k-50k
+464660       >50k
+464661        NaN
+464662    10k-15k
+464663    20k-25k
+Name: income2, Length: 464664, dtype: object
 
 ##Cleaning the height and weight columns
 
 Okay, now let's work with the height and weight data. We'll start by noting that 7777 and 9999 are 'unknown' or 'replaced' codes, so we'll NaN those right away. Also, in later years, the survey gave the option of taking height and weight in metric and imperial units. Earlier on, it's all imperial, so we'll make and option for using the metric system (which is denoted differently in the codes). Finally, our max weight changes over the years also, so we'll set that now to 999 lbs.
 
-
-    hw_replace = {7777:np.nan, 9999:np.nan}
-    metric = True
-    max_weight = 999
-    height = height.replace(hw_replace)
-    weight = weight.replace(hw_replace)
+```python
+hw_replace = {7777:np.nan, 9999:np.nan}
+metric = True
+max_weight = 999
+height = height.replace(hw_replace)
+weight = weight.replace(hw_replace)
+```
 
 ###Dealing with the height codes
 
@@ -1731,57 +1732,58 @@ If the number is greather than 9000 and our metric toggle is `True`, then we kno
 
 _**Note:** I noticed that if I do all of this in Pandas, it is very slow. It's much faster to put the Series into a python list, do the operations and append the result to a new list, and then save the result back to a Series._
 
+```python
+height = height.tolist()
+new_height = []
+for row in height:
+    h = str(row)
 
-    height = height.tolist()
-    new_height = []
-    for row in height:
-        h = str(row)
+    if row < 1: # If the height is 0, it isn't real
+        meters = np.nan
 
-        if row < 1: # If the height is 0, it isn't real
+    elif row < 712:
+        feet = float(h[0])
+        inches = float(h[1:])
+        if inches > 12: # Catches an error by the surveyor: no one is 5' 13" tall
+            meters = np.nan
+        else:
+            inches = inches + feet*12
+            meters = inches * 0.0254
+
+    elif row < 9999 and row >= 9000 and metric:
+        meters = float(h[1])+float(h[2:])*0.01
+        if meters == 0: # If the height is 0, it isn't real
             meters = np.nan
 
-        elif row < 712:
-            feet = float(h[0])
-            inches = float(h[1:])
-            if inches > 12: # Catches an error by the surveyor: no one is 5' 13" tall
-                meters = np.nan
-            else:
-                inches = inches + feet*12
-                meters = inches * 0.0254
+    else: # If you've gotten this far, give up. You're NaN
+        meters = np.nan
 
-        elif row < 9999 and row >= 9000 and metric:
-            meters = float(h[1])+float(h[2:])*0.01
-            if meters == 0: # If the height is 0, it isn't real
-                meters = np.nan
-
-        else: # If you've gotten this far, give up. You're NaN
-            meters = np.nan
-
-        new_height.append(meters)
+    new_height.append(meters)
+```
 
 Now let's do something similar for the weight. Except this time, we don't have to play fun games with strings for the imperial units (we still do with the metric units).
 
+```python
+weight = weight.tolist()
+new_weight = []
+for row in weight:
 
-    weight = weight.tolist()
-    new_weight = []
-    for row in weight:
+    if row < 10: # No person ages 18-99 should weigh 10 lbs.
+        kg = np.nan
 
-        if row < 10: # No person ages 18-99 should weigh 10 lbs.
+    elif row < max_weight:
+        kg = row * 0.453592
+
+    elif row < 9999 and metric:
+        w = str(row)
+        kg = float(w[1:])
+        if kg < 10: # Again, no person 18-99 should weigh 10 kgs. And yes, I know that 10 lbs != 10 kgs, but whatever
             kg = np.nan
 
-        elif row < max_weight:
-            kg = row * 0.453592
+    else:
+        kg = np.nan
 
-        elif row < 9999 and metric:
-            w = str(row)
-            kg = float(w[1:])
-            if kg < 10: # Again, no person 18-99 should weigh 10 kgs. And yes, I know that 10 lbs != 10 kgs, but whatever
-                kg = np.nan
-
-        else:
-            kg = np.nan
-
-        new_weight.append(kg)
+    new_weight.append(kg)
 
 ###Calculating BMI
 
@@ -1791,28 +1793,31 @@ $bmi=\frac{w}{h^2}$
 
 BMIs that are less than 10 or greater than 200 are possible, but highly unlikely. At the moment, I'm not terribly interested in these outliers (which are honestly more likely the result of error than true BMIs anyway). We will exclude them.
 
-
-    bmi = []
-    for h, w in zip(new_height, new_weight):
-        b = w/(h*h)
-        if b < 10 or b > 200:
-            b = np.nan
-        bmi.append(b)
+```python
+bmi = []
+for h, w in zip(new_height, new_weight):
+    b = w/(h*h)
+    if b < 10 or b > 200:
+        b = np.nan
+    bmi.append(b)
+```
 
 We'll quickly save the height, weight, and BMI back to Pandas Series.
 
-
-    height = pd.Series(new_height)
-    weight = pd.Series(new_weight)
-    bmi = pd.Series(bmi)
+```python
+height = pd.Series(new_height)
+weight = pd.Series(new_weight)
+bmi = pd.Series(bmi)
+```
 
 ##Saving our clean data
 
 We're almost there! Now, let's take all of our cleaned up columns and put them back together as a single DataFrame and name the columns something easy to understand. We'll save that out to a `.csv`.
 
-
-    brfss_out = pd.concat([income, race, state, age, sex, height, weight, bmi], axis=1)
-    brfss_out.columns = ['income', 'race', 'state', 'age', 'sex', 'height', 'weight', 'bmi']
-    brfss_out.to_csv('brfss' + year + 'clean.csv')
+```python
+brfss_out = pd.concat([income, race, state, age, sex, height, weight, bmi], axis=1)
+brfss_out.columns = ['income', 'race', 'state', 'age', 'sex', 'height', 'weight', 'bmi']
+brfss_out.to_csv('brfss' + year + 'clean.csv')
+```
 
 And now, at long last, we are finished. We have a cleaned up set of demographic data in `brfss2014clean.csv`. It is in the same format as what we can spit out for all of the other years of the BRFSS 1987-2014, so it will be easy to run analyses across all the years.
