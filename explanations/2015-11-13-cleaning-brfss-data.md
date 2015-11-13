@@ -1619,18 +1619,18 @@ Name: income2, Length: 464664, dtype: float64
 
 We'll start with cleaning up the income data. Looking at the codebook, the codes are:
 
-* 1: <\$10k
-* 2: \$10k - \$15k
-* 3: \$15k - \$20k
-* 4: \$20k - \$25k
-* 5: \$25k - \$35k
-* 6: \$35k - \$50k
-* 7: \$50k - \$75k
-* 8: \>\$75k
+* 1: <$10k
+* 2: $10k - $15k
+* 3: $15k - $20k
+* 4: $20k - $25k
+* 5: $25k - $35k
+* 6: $35k - $50k
+* 7: $50k - $75k
+* 8: >$75k
 * 77: Unknown
 * 99: Refused
 
-We're going to group 77 and 99 together as `np.nan`, and we're going to group 7 and 8 together as simply \>\$50k (in earlier BRFSS years, it stops at />\$50K, rather than including the \$50k-\$75k and \>\$75k groups)
+We're going to group 77 and 99 together as `np.nan`, and we're going to group 7 and 8 together as simply >$50k (in earlier BRFSS years, it stops at >$50K, rather than including the $50k-$75k and >$75k groups)
 
 Pandas makes it easy to use a dictionary for replacement, so we'll put these codes into a dictionary.
 
@@ -1784,6 +1784,7 @@ for row in weight:
         kg = np.nan
 
     new_weight.append(kg)
+```
 
 ###Calculating BMI
 
