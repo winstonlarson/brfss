@@ -18,6 +18,7 @@ The codebooks are available from the CDC for 1990-2014. I was able to find the c
 It's easiest to use the files in Python if you convert them into `.csv` format. I haven't been able to find a robust solution for translating `.XPT` format data in Python, so I use an R script called `sas2csv.R` (I promise, it's the only R script in the repo). [By the way, if you know of a nice way to deal directly with this data in Python, I'd love to hear from you.] Downloading all the files and translating them into `.csv` is a pain, so I've done it for you. Since the `.csv` files are too large to host on GitHub, I'm making them all (1984-2014) available through my AWS account, and you can find them  [here](https://www.amazon.com/clouddrive/share/HAfuNnNSbFqKmdyuodrVAQMpgcyqoFACuBoKWIqoWeG?ref_=cd_ph_share_link_copy).
 
 ###Cleaning BRFSS data
+
 A quick flip through the codebooks quicky makes it clear that BRFSS data is not useful right out of the box. You'll have to do some heavy-duty cleaning to get what you want. And watchout: the codes and variable names can change subtly from year to year, so be certain to check the codebook for every year of interest.
 
 I started by grabbing and cleaning the basic demographic data available for each respondant. Not only does this show how to clean and use BRFSS data, but you could for example see if the demographics of the survey change over time. I ended up grabbing the income group, race, state, age group, sex, and bmi of each respondant. 
